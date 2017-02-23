@@ -17,6 +17,7 @@ from mgr.pub.config.config import REG_TO_MSB_WHEN_START, REG_TO_MSB_REG_URL, REG
 
 urlpatterns = [
     url(r'^', include('mgr.samples.urls')),
+    url(r'^', include('mgr.vnfreg.urls')),
 ]
 
 # regist to MSB when startup

@@ -11,17 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from django.db import models
 
+from django.conf.urls import patterns, url
+from rest_framework.urlpatterns import format_suffix_patterns
+from mgr.vnfreg import views
 
-class VnfRegModel(models.Model):
-    class Meta:
-        db_table = 'VNF_REG'
+urlpatterns = [
+    url(r'^openoapi/vnfmgr/v1/vnfs$', views.add_vnf, name='add_vnf'),
+    url(r'^openoapi/vnfmgr/v1/vnfs/(?P<vnfInstId>[0-9a-zA-Z\-\_]+)$', views.access_vnf, name='access_vnf'),
+    url(r'^openoapi/vnfmgr/v1/configuration$', views.vnf_config, name='vnf_config'),
+]
 
-    id = models.CharField(db_column='ID', primary_key=True, max_length=200)
-    ip = models.CharField(db_column='IP', max_length=200)
-    port = models.CharField(db_column='PORT', max_length=200)
-    username = models.CharField(db_column='USERNAME', max_length=255)
-    password = models.CharField(db_column='PASSWORD', max_length=255)
-    
+urlpatterns = format_suffix_patterns(urlpatterns)
 
