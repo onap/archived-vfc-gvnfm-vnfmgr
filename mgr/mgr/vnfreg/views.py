@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import logging
+import json
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -21,6 +22,7 @@ from rest_framework.response import Response
 from mgr.pub.utils.values import ignore_case_get
 from mgr.pub.utils.syscomm import fun_name
 from mgr.pub.database.models import VnfRegModel
+from mgr.pub.utils import restcall
 
 logger = logging.getLogger(__name__)
 
@@ -89,4 +91,22 @@ def access_vnf(request, *args, **kwargs):
 @api_view(http_method_names=['POST'])
 def vnf_config(request, *args, **kwargs):
     logger.info("Enter %s, data is %s", fun_name(), request.data)
+    vnf_inst_id = ignore_case_get(request.data, "vnfInstanceId")
+    try:
+        vnf = VnfRegModel.objects.filter(id=vnf_inst_id)
+        if not vnf:
+            raise Exception("Vnf(%s) does not exist." % vnf_inst_id)
+        ret = restcall.call_req(
+            base_url="http://%s:%s/" % (vnf[0].ip, vnf[0].port), 
+            user=vnf[0].username, 
+            passwd=vnf[0].password, 
+            auth_type=restcall.rest_no_auth,
+            resource="v1/vnfconfig", 
+            method="POST", 
+            content=json.dumps(request.data))
+        if ret[0] != 0:
+            raise Exception("Failed to config Vnf(%s): %s" % (vnf_inst_id, ret[1]))
+    except Exception as e:
+        return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response(data={}, status=status.HTTP_202_ACCEPTED)
     

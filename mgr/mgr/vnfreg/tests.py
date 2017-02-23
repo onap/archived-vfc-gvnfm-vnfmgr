@@ -14,10 +14,12 @@
 
 import unittest
 import json
+import mock
 from django.test import Client
 from rest_framework import status
 
 from mgr.pub.database.models import VnfRegModel
+from mgr.pub.utils import restcall
 
 class VnfRegTest(unittest.TestCase):
     def setUp(self):
@@ -36,6 +38,67 @@ class VnfRegTest(unittest.TestCase):
             "port": "2325",
             "username": "admin1",
             "password": "admin1234"
+        }
+        self.vnfconfig = {
+            "vnfInstanceId": "1",
+            "vnfConfigurationData": {
+                "cp": [
+                    {
+                        "cpId": "cp-1",
+                        "cpdId": "cpd-a",
+                        "cpAddress": [
+                            {
+                                "addresses": [
+                                    {
+                                        "addressType": "MAC",
+                                        "l2AddressData": "00:f3:43:20:a2:a3"
+                                    },
+                                    {
+                                        "addressType": "IP",
+                                        "l3AddressData": {
+                                            "iPAddressType": "IPv4",
+                                            "iPAddress": "192.168.104.2"
+                                        }
+                                    }
+                                ],
+                                "useDynamicAddress": "FALSE"
+                            }
+                        ]
+                    }
+                ],
+                "vnfSpecificData": {
+                    "autoScalable": "FALSE",
+                    "autoHealable": "FALSE"
+                }
+            },
+            "vnfcConfigurationData": {
+                "vnfcId": "vnfc-1",
+                "cp": [
+                    {
+                        "cpId": "cp-11",
+                        "cpdId": "cpd-1a",
+                        "cpAddress": [
+                            {
+                                "addresses": [
+                                    {
+                                        "addressType": "MAC",
+                                        "l2AddressData": "00:f3:43:21:a2:a3"
+                                    },
+                                    {
+                                        "addressType": "IP",
+                                        "l3AddressData": {
+                                            "iPAddressType": "IPv4",
+                                            "iPAddress": "192.168.105.2"
+                                        }
+                                    }
+                                ],
+                                "useDynamicAddress": "FALSE"
+                            }
+                        ]
+                    }
+                ],
+                "vnfcSpecificData": {}
+            }
         }
 
     def tearDown(self):
@@ -104,7 +167,14 @@ class VnfRegTest(unittest.TestCase):
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))
         
-    def test_url(self):
-        pass
-        #resp_data = json.loads(response.content)
-        #self.assertEqual({"status": "active"}, resp_data)
+    @mock.patch.object(restcall, 'call_req')
+    def test_vnf_config_normal(self, mock_call_req):
+        mock_call_req.return_value = [0, "", '204']
+        self.client.post("/openoapi/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
+        response = self.client.post("/openoapi/vnfmgr/v1/configuration", self.vnfconfig, format='json')
+        self.assertEqual(status.HTTP_202_ACCEPTED, response.status_code, response.content)
+        
+    def test_vnf_config_when_not_exist(self):
+        response = self.client.post("/openoapi/vnfmgr/v1/configuration", self.vnfconfig, format='json')
+        self.assertEqual(status.HTTP_500_INTERNAL_SERVER_ERROR, response.status_code, response.content)
+        self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))
