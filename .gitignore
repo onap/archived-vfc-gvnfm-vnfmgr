@@ -1,8 +1,4 @@
-target/
-coverage-report/
-bin/
-.project
-.settings
-.classpath
-.class
-.checkstyle
+mgr/.idea
+mgr/logs/runtime_mgr.log
+*.pyc
+

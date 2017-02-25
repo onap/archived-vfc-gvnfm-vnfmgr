@@ -1,15 +1,361 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "VNF Mgr Service rest API"
-    },
-    "basePath": "/openoapi/vnfmgr/v1",
-    "tags": [
-        {
-            "name": "vnfmgr"
-        }
-    ],
-    "paths": {
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "VNF Mgr Service rest API"
+  },
+  "basePath": "/openoapi/vnfmgr/v1",
+  "tags": [
+    {
+      "name": "vnfmgr"
     }
+  ],
+  "paths": {
+    "/vnfs": {
+      "post": {
+        "tags": [
+          "vnfReg Resource"
+        ],
+        "summary": "save the specified vnfReg info",
+        "description": "",
+        "operationId": "save_vnfReg",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "request parameters",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VnfRegRequestParams"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/saveVnfRegInfo"
+            }
+          },
+          "404": {
+            "description": "the vnf instance id is wrong"
+          },
+          "500": {
+            "description": "the url is invalid"
+          }
+        }
+      }
+    },
+    "/vnfs/{vnfInstId}": {
+      "get": {
+        "tags": [
+          "vnfReg Resource"
+        ],
+        "summary": "query the specified vnfReg info",
+        "description": "",
+        "operationId": "query_vnfReg",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "vnfInstId",
+            "in": "path",
+            "description": "vnf instance id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/VnfRegInfo"
+            }
+          },
+          "404": {
+            "description": "the vnf instance id is wrong"
+          },
+          "500": {
+            "description": "the url is invalid"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "vnf Resource"
+        ],
+        "summary": "save the specified vnf info",
+        "description": "",
+        "operationId": "save_vnf",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "request parameters",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VnfRegRequestParams"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/saveVnfInfo"
+            }
+          },
+          "404": {
+            "description": "the vnf instance id is wrong"
+          },
+          "500": {
+            "description": "the url is invalid"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "vnf Resource"
+        ],
+        "summary": "delete the specified vnf info",
+        "description": "",
+        "operationId": "delete_vnf",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "vnfInstId",
+            "in": "path",
+            "description": "vnf instance id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/deleteVnfInfo"
+            }
+          },
+          "404": {
+            "description": "the vnf instance id is wrong"
+          },
+          "500": {
+            "description": "the url is invalid"
+          }
+        }
+      }
+    },
+    "/configuration": {
+      "post": {
+        "tags": [
+          "vnf Resource"
+        ],
+        "summary": "config the specified vnf info",
+        "description": "",
+        "operationId": "config_vnf",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "request data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VnfRequestParams"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/configVnfInfo"
+            }
+          },
+          "404": {
+            "description": "the vnf instance id is wrong"
+          },
+          "500": {
+            "description": "the url is invalid"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "VnfRegRequestParams": {
+      "type": "object",
+      "properties": {
+        "vnfInstId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "port": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "saveVnfRegInfo": {
+      "type": "object",
+      "properties": {}
+    },
+    "VnfRegInfo": {
+      "type": "object",
+      "properties": {
+        "vnfInstId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "port": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "saveVnfInfo": {
+      "type": "object"
+    },
+    "deleteVnfInfo": {
+      "type": "object"
+    },
+    "VnfRequestParams": {
+      "type": "object",
+      "properties": {
+        "vnfInstanceId": {
+          "type": "string"
+        },
+        "vnfConfigurationData": {
+          "type": "object",
+          "properties": {
+            "cp": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "vnfSpecificData": {
+              "type": "object",
+              "properties": {
+                "autoScalable": {
+                  "type": "string"
+                },
+                "autoHealable": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "vnfcConfigurationData": {
+          "type": "object",
+          "properties": {
+            "vnfcId": {
+              "type": "string"
+            },
+            "cp": {
+              "type": "array",
+              "items": {
+                "cpId": {
+                  "type": "string"
+                },
+                "cpdId": {
+                  "type": "string"
+                },
+                "cpAddress": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "vnfcSpecificData": {}
+          }
+        }
+      }
+    },
+    "configVnfInfo": {
+      "type": "object",
+      "properties": {
+        "vnfConfigurationData": {
+          "cp": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "vnfSpecificData": {
+            "type": "object",
+            "properties": {
+              "autoScalable": {
+                "type": "string"
+              },
+              "autoHealable": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "vnfcConfigurationData": {
+          "type": "object",
+          "properties": {
+            "vnfcId": {
+              "type": "string"
+            },
+            "cp": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "vnfcSpecificData": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
 }
