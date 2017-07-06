@@ -1,0 +1,4 @@
+mgr/.idea
+mgr/logs/runtime_mgr.log
+*.pyc
+
