@@ -48,5 +48,5 @@
             </includes>
         </fileSet>
     </fileSets>
-    <baseDirectory>gvnfm-vnfmgr/mgr</baseDirectory>
+    <baseDirectory>vfc/gvnfm/vnfmgr/mgr</baseDirectory>
 </assembly>

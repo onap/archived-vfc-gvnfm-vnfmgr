@@ -1,4 +1,5 @@
-mgr/.idea
+.idea
+.gitignore
 mgr/logs/runtime_mgr.log
 *.pyc
 
