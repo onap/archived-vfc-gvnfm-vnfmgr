@@ -105,7 +105,7 @@ class VnfRegTest(unittest.TestCase):
         pass
 
     def test_add_vnf_normal(self):
-        response = self.client.post("/openoapi/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
+        response = self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
         self.assertEqual(status.HTTP_201_CREATED, response.status_code, response.content)
         vnfs = VnfRegModel.objects.filter()
         self.assertEqual(1, len(vnfs))
@@ -119,14 +119,14 @@ class VnfRegTest(unittest.TestCase):
         self.assertEqual(self.vnfInst1, vnfInstActual)
         
     def test_add_vnf_when_duplicate(self):
-        self.client.post("/openoapi/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
-        response = self.client.post("/openoapi/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
+        self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
+        response = self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
         self.assertEqual(status.HTTP_500_INTERNAL_SERVER_ERROR, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) already exists."}, json.loads(response.content))
         
     def test_set_vnf_normal(self):
-        self.client.post("/openoapi/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
-        response = self.client.put("/openoapi/vnfmgr/v1/vnfs/1", 
+        self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
+        response = self.client.put("/api/vnfmgr/v1/vnfs/1",
             json.dumps(self.vnfInst1_new), content_type='application/json')
         self.assertEqual(status.HTTP_202_ACCEPTED, response.status_code, response.content)
         vnfs = VnfRegModel.objects.filter()
@@ -141,40 +141,40 @@ class VnfRegTest(unittest.TestCase):
         self.assertEqual(self.vnfInst1_new, vnfInstActual)
         
     def test_set_vnf_when_not_exist(self):
-        response = self.client.put("/openoapi/vnfmgr/v1/vnfs/1", 
+        response = self.client.put("/api/vnfmgr/v1/vnfs/1",
             json.dumps(self.vnfInst1_new), content_type='application/json')
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))
         
     def test_get_vnf_normal(self):
-        self.client.post("/openoapi/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
-        response = self.client.get("/openoapi/vnfmgr/v1/vnfs/1")
+        self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
+        response = self.client.get("/api/vnfmgr/v1/vnfs/1")
         self.assertEqual(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEqual(self.vnfInst1, json.loads(response.content))
         
     def test_get_vnf_when_not_exist(self):
-        response = self.client.get("/openoapi/vnfmgr/v1/vnfs/1")
+        response = self.client.get("/api/vnfmgr/v1/vnfs/1")
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))
         
     def test_del_vnf_normal(self):
-        self.client.post("/openoapi/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
-        response = self.client.delete("/openoapi/vnfmgr/v1/vnfs/1")
+        self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
+        response = self.client.delete("/api/vnfmgr/v1/vnfs/1")
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code, response.content)
         
     def test_del_vnf_when_not_exist(self):
-        response = self.client.delete("/openoapi/vnfmgr/v1/vnfs/1")
+        response = self.client.delete("/api/vnfmgr/v1/vnfs/1")
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))
         
     @mock.patch.object(restcall, 'call_req')
     def test_vnf_config_normal(self, mock_call_req):
         mock_call_req.return_value = [0, "", '204']
-        self.client.post("/openoapi/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
-        response = self.client.post("/openoapi/vnfmgr/v1/configuration", self.vnfconfig, format='json')
+        self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
+        response = self.client.post("/api/vnfmgr/v1/configuration", self.vnfconfig, format='json')
         self.assertEqual(status.HTTP_202_ACCEPTED, response.status_code, response.content)
         
     def test_vnf_config_when_not_exist(self):
-        response = self.client.post("/openoapi/vnfmgr/v1/configuration", self.vnfconfig, format='json')
+        response = self.client.post("/api/vnfmgr/v1/configuration", self.vnfconfig, format='json')
         self.assertEqual(status.HTTP_500_INTERNAL_SERVER_ERROR, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))

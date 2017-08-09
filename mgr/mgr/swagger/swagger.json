@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "title": "VNF Mgr Service rest API"
   },
-  "basePath": "/openoapi/vnfmgr/v1",
+  "basePath": "/api/vnfmgr/v1",
   "tags": [
     {
       "name": "vnfmgr"
