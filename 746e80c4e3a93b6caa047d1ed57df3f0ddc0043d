@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "9a437d4f_47eb96b0",
+        "filename": "mgr/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 991
+      },
+      "writtenOn": "2017-09-06T22:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a437d4f_1f3278a7",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a437d4f_bf200c4a",
         "filename": "mgr/docker/Dockerfile",
         "patchSetId": 1
@@ -111,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "9a437d4f_27d2d200",
+        "filename": "mgr/docker/build_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 991
+      },
+      "writtenOn": "2017-09-06T22:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a437d4f_9f6f8892",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a437d4f_df5d10eb",
         "filename": "mgr/docker/build_image.sh",
         "patchSetId": 1
@@ -122,6 +170,30 @@
       "writtenOn": "2017-09-06T00:42:26Z",
       "side": 1,
       "message": "This should be build_vnfmgr and push vnfmgr, maybe we can change the function name to build_image and push_image, so\nthat we can reduce this type of error later.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 8
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_07cd8e5d",
+        "filename": "mgr/docker/build_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 991
+      },
+      "writtenOn": "2017-09-06T22:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a437d4f_df5d10eb",
       "range": {
         "startLine": 33,
         "startChar": 0,
@@ -237,6 +309,30 @@
       "writtenOn": "2017-09-06T01:04:15Z",
       "side": 1,
       "message": "This scritp is in the docker container, we typically start Docker on a host, so this scritp is useless, can delete it.",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_e7dbaa19",
+        "filename": "mgr/docker/run_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 991
+      },
+      "writtenOn": "2017-09-06T22:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a437d4f_1fd95857",
       "range": {
         "startLine": 1,
         "startChar": 7,
