@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_1f0b98d7",
+        "filename": "mgr/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2017-09-06T00:42:26Z",
+      "side": 1,
+      "message": "Current vnfmgr has no database in it. so we need not install MySql and add db scripts in it",
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_9f6f8892",
+        "filename": "mgr/docker/build_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2017-09-06T00:42:26Z",
+      "side": 1,
+      "message": "This should be microservice name, you can ref to config.py to get the microservice name.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_df5d10eb",
+        "filename": "mgr/docker/build_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2017-09-06T00:42:26Z",
+      "side": 1,
+      "message": "This should be build_vnfmgr and push vnfmgr, maybe we can change the function name to build_image and push_image, so\nthat we can reduce this type of error later.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 8
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_bff92cca",
+        "filename": "mgr/docker/instance_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2017-09-06T00:42:26Z",
+      "side": 1,
+      "message": "redis-server and mysql are not needed in vnfmgr, you can delete them.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_7f03c4b8",
+        "filename": "mgr/docker/run_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2017-09-06T00:42:26Z",
+      "side": 1,
+      "message": "need be changed to microservice name",
+      "range": {
+        "startLine": 4,
+        "startChar": 122,
+        "endLine": 4,
+        "endChar": 134
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
