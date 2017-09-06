@@ -19,6 +19,75 @@
     },
     {
       "key": {
+        "uuid": "9a437d4f_3f2d3c47",
+        "filename": "mgr/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1337
+      },
+      "writtenOn": "2017-09-06T01:04:15Z",
+      "side": 1,
+      "message": "GVNFM VNFMGR don\u0027t need redis and mysql, delete these",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_1f3278a7",
+        "filename": "mgr/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1337
+      },
+      "writtenOn": "2017-09-06T01:04:15Z",
+      "side": 1,
+      "message": "The port of gvnfm vnfmgr is 8803",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_bf200c4a",
+        "filename": "mgr/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1337
+      },
+      "writtenOn": "2017-09-06T01:04:15Z",
+      "side": 1,
+      "message": "These ports are Redis and MySQL, delete these ports",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a437d4f_9f6f8892",
         "filename": "mgr/docker/build_image.sh",
         "patchSetId": 1
@@ -65,6 +134,75 @@
     },
     {
       "key": {
+        "uuid": "9a437d4f_9f1d4812",
+        "filename": "mgr/docker/docker-entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1337
+      },
+      "writtenOn": "2017-09-06T01:04:15Z",
+      "side": 1,
+      "message": "Mysql is no need, can delete this, you can refer to svnfm\\zte\\vmanager",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_5f17e0ed",
+        "filename": "mgr/docker/instance_config.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1337
+      },
+      "writtenOn": "2017-09-06T01:04:15Z",
+      "side": 1,
+      "message": "No need, can delete these",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 89
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_3fd41c1f",
+        "filename": "mgr/docker/instance_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1337
+      },
+      "writtenOn": "2017-09-06T01:04:15Z",
+      "side": 1,
+      "message": "For Vnfmgr Micro Services, this file can be empty for later expansion use.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a437d4f_bff92cca",
         "filename": "mgr/docker/instance_init.sh",
         "patchSetId": 1
@@ -81,6 +219,29 @@
         "startChar": 0,
         "endLine": 29,
         "endChar": 15
+      },
+      "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_1fd95857",
+        "filename": "mgr/docker/run_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1337
+      },
+      "writtenOn": "2017-09-06T01:04:15Z",
+      "side": 1,
+      "message": "This scritp is in the docker container, we typically start Docker on a host, so this scritp is useless, can delete it.",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 11
       },
       "revId": "746e80c4e3a93b6caa047d1ed57df3f0ddc0043d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
