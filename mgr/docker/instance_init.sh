@@ -10,9 +10,8 @@ function start_mysql {
 }
 
 function create_database {
-    cd /service/vfc/gvnfm/vnfmgr/mgr/docker
-    mysql -uroot -proot < createdb.sql
-    mysql -uroot -proot < createobj.sql
+    cd /service/bin
+    bash initDB.sh root $MYSQL_ROOT_PASSWORD 3306 127.0.0.1
     cd /service
 }
 

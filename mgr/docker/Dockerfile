@@ -34,6 +34,13 @@ RUN wget -q -O vfc-gvnfm-vnfmgr.zip 'https://nexus.onap.org/service/local/artifa
     unzip vfc-gvnfm-vnfmgr.zip && \
     rm -rf vfc-gvnfm-vnfmgr.zip
 
+# get db scripts from nexus
+RUN wget -q -O vfc-gvnfm-vnfres-res.zip 'https://nexus.onap.org/service/local/artifact/maven/redirect?r=snapshots&g=org.onap.vfc.gvnfm.vnfres&a=vfc-gvnfm-vnfres-res&v=LATEST&e=zip' && \
+    unzip vfc-gvnfm-vnfres-res.zip vfc/gvnfm/vnfres/res/assembly/*.* && \
+    mv ./vfc/gvnfm/vnfres/res/assembly/bin ./bin && \
+    mv ./vfc/gvnfm/vnfres/res/assembly/dbscripts ./dbscripts && \
+    rm -rf vfc-gvnfm-vnfres-res.zip
+
 RUN sed -i "s|bind-address.*|# bind-address = 127.0.0.1|" /etc/mysql/my.cnf
 
 WORKDIR /service/vfc/gvnfm/vnfmgr/mgr
