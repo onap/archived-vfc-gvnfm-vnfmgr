@@ -13,8 +13,6 @@ fi
 
 if [ $SERVICE_IP ]; then
     sed -i "s|\"ip\": \".*\"|\"ip\": \"$SERVICE_IP\"|" vfc/gvnfm/vnfmgr/mgr/mgr/pub/config/config.py
-    sed -i "s|127\.0\.0\.1|$SERVICE_IP|" vfc/gvnfm/vnfmgr/mgr/run.sh
-    sed -i "s|127\.0\.0\.1|$SERVICE_IP|" vfc/gvnfm/vnfmgr/mgr/stop.sh
 fi
 
 if [ $REDIS_HOST ]; then
