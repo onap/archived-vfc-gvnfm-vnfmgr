@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from django.db import models
 
 
@@ -23,5 +24,3 @@ class VnfRegModel(models.Model):
     port = models.CharField(db_column='PORT', max_length=200)
     username = models.CharField(db_column='USERNAME', max_length=255)
     password = models.CharField(db_column='PASSWORD', max_length=255)
-    
-

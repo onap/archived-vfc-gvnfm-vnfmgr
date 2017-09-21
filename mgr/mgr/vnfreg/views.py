@@ -26,6 +26,7 @@ from mgr.pub.utils import restcall
 
 logger = logging.getLogger(__name__)
 
+
 @api_view(http_method_names=['POST'])
 def add_vnf(request, *args, **kwargs):
     logger.info("Enter %s, data is %s", fun_name(), request.data)
@@ -49,7 +50,7 @@ def access_vnf(request, *args, **kwargs):
     vnf_inst_id = ignore_case_get(kwargs, "vnfInstId")
     logger.info("Enter %s, method is %s, ", fun_name(), request.method)
     logger.info("vnfInstId is %s, data is %s", vnf_inst_id, request.data)
-    ret, normal_status = None, None
+    # ret, normal_status = None, None
     try:
         vnf = VnfRegModel.objects.filter(id=vnf_inst_id)
         if not vnf:
@@ -88,6 +89,7 @@ def access_vnf(request, *args, **kwargs):
         return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data=ret, status=normal_status)
 
+
 @api_view(http_method_names=['POST'])
 def vnf_config(request, *args, **kwargs):
     logger.info("Enter %s, data is %s", fun_name(), request.data)
@@ -109,4 +111,3 @@ def vnf_config(request, *args, **kwargs):
     except Exception as e:
         return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data={}, status=status.HTTP_202_ACCEPTED)
-    
