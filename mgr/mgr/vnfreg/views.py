@@ -99,12 +99,12 @@ def vnf_config(request, *args, **kwargs):
         if not vnf:
             raise Exception("Vnf(%s) does not exist." % vnf_inst_id)
         ret = restcall.call_req(
-            base_url="http://%s:%s/" % (vnf[0].ip, vnf[0].port), 
-            user=vnf[0].username, 
-            passwd=vnf[0].password, 
+            base_url="http://%s:%s/" % (vnf[0].ip, vnf[0].port),
+            user=vnf[0].username,
+            passwd=vnf[0].password,
             auth_type=restcall.rest_no_auth,
-            resource="v1/vnfconfig", 
-            method="POST", 
+            resource="v1/vnfconfig",
+            method="POST",
             content=json.dumps(request.data))
         if ret[0] != 0:
             raise Exception("Failed to config Vnf(%s): %s" % (vnf_inst_id, ret[1]))
