@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 def ignore_case_get(args, key, def_val=""):
     if not key:
         return def_val
@@ -21,6 +22,7 @@ def ignore_case_get(args, key, def_val=""):
         if old_key.upper() == key.upper():
             return args[old_key]
     return def_val
+
 
 def set_opt_val(param, key, val):
     if val or val is False:

@@ -21,6 +21,7 @@ from rest_framework import status
 from mgr.pub.database.models import VnfRegModel
 from mgr.pub.utils import restcall
 
+
 class VnfRegTest(unittest.TestCase):
     def setUp(self):
         self.client = Client()
