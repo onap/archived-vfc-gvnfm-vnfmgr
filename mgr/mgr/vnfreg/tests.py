@@ -128,7 +128,7 @@ class VnfRegTest(unittest.TestCase):
     def test_set_vnf_normal(self):
         self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
         response = self.client.put("/api/vnfmgr/v1/vnfs/1",
-            json.dumps(self.vnfInst1_new), content_type='application/json')
+                                   json.dumps(self.vnfInst1_new), content_type='application/json')
         self.assertEqual(status.HTTP_202_ACCEPTED, response.status_code, response.content)
         vnfs = VnfRegModel.objects.filter()
         self.assertEqual(1, len(vnfs))
@@ -143,7 +143,7 @@ class VnfRegTest(unittest.TestCase):
 
     def test_set_vnf_when_not_exist(self):
         response = self.client.put("/api/vnfmgr/v1/vnfs/1",
-            json.dumps(self.vnfInst1_new), content_type='application/json')
+                                   json.dumps(self.vnfInst1_new), content_type='application/json')
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))
 
