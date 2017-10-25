@@ -26,9 +26,6 @@ RUN apt-get update && \
     apt-get install -y libssl-dev && \
     apt-get install -y libffi-dev
 
-RUN sudo apt-get remove vim-common
-RUN sudo apt-get install vim
-
 ADD . /service
 WORKDIR /service
 
