@@ -41,6 +41,7 @@ def add_vnf(request, *args, **kwargs):
             username=ignore_case_get(request.data, "username"),
             password=ignore_case_get(request.data, "password")).save()
     except Exception as e:
+        logger.error(e.message)
         return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data={"vnfInstId": vnf_inst_id}, status=status.HTTP_201_CREATED)
 
@@ -86,6 +87,7 @@ def access_vnf(request, *args, **kwargs):
             ret = {}
             normal_status = status.HTTP_204_NO_CONTENT
     except Exception as e:
+        logger.error(e.message)
         return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data=ret, status=normal_status)
 
@@ -109,5 +111,6 @@ def vnf_config(request, *args, **kwargs):
         if ret[0] != 0:
             raise Exception("Failed to config Vnf(%s): %s" % (vnf_inst_id, ret[1]))
     except Exception as e:
+        logger.error(e.message)
         return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data={}, status=status.HTTP_202_ACCEPTED)
