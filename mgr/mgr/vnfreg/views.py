@@ -14,6 +14,7 @@
 
 import logging
 import json
+import traceback
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -42,6 +43,7 @@ def add_vnf(request, *args, **kwargs):
             password=ignore_case_get(request.data, "password")).save()
     except Exception as e:
         logger.error(e.message)
+        logger.error(traceback.format_exc())
         return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data={"vnfInstId": vnf_inst_id}, status=status.HTTP_201_CREATED)
 
@@ -51,7 +53,6 @@ def access_vnf(request, *args, **kwargs):
     vnf_inst_id = ignore_case_get(kwargs, "vnfInstId")
     logger.info("Enter %s, method is %s, ", fun_name(), request.method)
     logger.info("vnfInstId is %s, data is %s", vnf_inst_id, request.data)
-    # ret, normal_status = None, None
     try:
         vnf = VnfRegModel.objects.filter(id=vnf_inst_id)
         if not vnf:
@@ -88,6 +89,7 @@ def access_vnf(request, *args, **kwargs):
             normal_status = status.HTTP_204_NO_CONTENT
     except Exception as e:
         logger.error(e.message)
+        logger.error(traceback.format_exc())
         return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data=ret, status=normal_status)
 
@@ -112,5 +114,6 @@ def vnf_config(request, *args, **kwargs):
             raise Exception("Failed to config Vnf(%s): %s" % (vnf_inst_id, ret[1]))
     except Exception as e:
         logger.error(e.message)
+        logger.error(traceback.format_exc())
         return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data={}, status=status.HTTP_202_ACCEPTED)
