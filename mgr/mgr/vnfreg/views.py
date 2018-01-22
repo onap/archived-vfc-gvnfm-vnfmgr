@@ -16,36 +16,64 @@ import logging
 import json
 import traceback
 
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from mgr.pub.utils.values import ignore_case_get
 from mgr.pub.utils.syscomm import fun_name
 from mgr.pub.database.models import VnfRegModel
 from mgr.pub.utils import restcall
+from mgr.vnfreg.serializers import ErrorSerializer, VnfInfoSerializer, ResponseSerializer
 
 logger = logging.getLogger(__name__)
 
 
-@api_view(http_method_names=['POST'])
-def add_vnf(request, *args, **kwargs):
-    logger.info("Enter %s, data is %s", fun_name(), request.data)
-    vnf_inst_id = ignore_case_get(request.data, "vnfInstId")
-    try:
-        if VnfRegModel.objects.filter(id=vnf_inst_id):
-            raise Exception("Vnf(%s) already exists." % vnf_inst_id)
-        VnfRegModel(
-            id=vnf_inst_id,
-            ip=ignore_case_get(request.data, "ip"),
-            port=ignore_case_get(request.data, "port"),
-            username=ignore_case_get(request.data, "username"),
-            password=ignore_case_get(request.data, "password")).save()
-    except Exception as e:
-        logger.error(e.message)
-        logger.error(traceback.format_exc())
-        return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    return Response(data={"vnfInstId": vnf_inst_id}, status=status.HTTP_201_CREATED)
+def handler_exception(e):
+    logger.error(e.message)
+    logger.error(traceback.format_exc())
+    errorSerializer = ErrorSerializer(data={'error': e.message})
+    errorSerializer.is_valid()
+    return errorSerializer.data
+
+
+class vnfmgr_addvnf(APIView):
+    @swagger_auto_schema(request_body=VnfInfoSerializer(),
+                         responses={
+                             201: ResponseSerializer(),
+                             500: ErrorSerializer()
+                         }
+    )
+    def post(self, request):
+        logger.info("Enter %s, data is %s", fun_name(), request.data)
+        requestSerializer = VnfInfoSerializer(data=request.data)
+        request_isValid = requestSerializer.is_valid()
+        try:
+            if not request_isValid:
+                raise Exception(requestSerializer.errors)
+
+            requestData = requestSerializer.data
+            vnf_inst_id = ignore_case_get(requestData, "vnfInstId")
+            if VnfRegModel.objects.filter(id=vnf_inst_id):
+                raise Exception("Vnf(%s) already exists." % vnf_inst_id)
+            VnfRegModel(
+                id=vnf_inst_id,
+                ip=ignore_case_get(requestData, "ip"),
+                port=ignore_case_get(requestData, "port"),
+                username=ignore_case_get(requestData, "username"),
+                password=ignore_case_get(requestData, "password")).save()
+
+            responseSerializer = ResponseSerializer(data={"vnfInstId": vnf_inst_id})
+            isValid = responseSerializer.is_valid()
+            if not isValid:
+                raise Exception(responseSerializer.errors)
+        except Exception as e:
+            errorData = handler_exception(e)
+            return Response(data=errorData, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response(data=responseSerializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(http_method_names=['GET', 'PUT', 'DELETE'])
