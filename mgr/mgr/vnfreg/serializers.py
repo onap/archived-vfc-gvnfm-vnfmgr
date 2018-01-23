@@ -37,7 +37,7 @@ class NoneSerializer(serializers.Serializer):
 
 class CpSerializer(serializers.Serializer):
     cpId = serializers.CharField(help_text="the cps id of vnf", required=True)
-    cpdId=serializers.CharField(help_text="the cpds id of vnf", required=True)
+    cpdId = serializers.CharField(help_text="the cpds id of vnf", required=True)
 
 
 class SpecificDataSerializer(serializers.Serializer):
