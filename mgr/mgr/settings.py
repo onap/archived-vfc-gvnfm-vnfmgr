@@ -97,7 +97,7 @@ SWAGGER_SETTINGS = {
     'LOGIN_URL': '/admin/login',
     'LOGOUT_URL': '/admin/logout',
 
-    'DEFAULT_INFO': 'mgr.urls.swagger_info'
+    'DEFAULT_INFO': 'mgr.swagger.urls.swagger_info'
 }
 
 DATABASES = {
