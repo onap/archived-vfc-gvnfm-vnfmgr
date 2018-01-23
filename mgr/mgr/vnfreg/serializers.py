@@ -29,3 +29,7 @@ class ResponseSerializer(serializers.Serializer):
 
 class ErrorSerializer(serializers.Serializer):
     error = serializers.CharField(help_text="error message", required=True)
+
+
+class NoneSerializer(serializers.Serializer):
+    pass

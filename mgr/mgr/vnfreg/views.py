@@ -16,6 +16,7 @@ import logging
 import json
 import traceback
 
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -26,7 +27,7 @@ from mgr.pub.utils.values import ignore_case_get
 from mgr.pub.utils.syscomm import fun_name
 from mgr.pub.database.models import VnfRegModel
 from mgr.pub.utils import restcall
-from mgr.vnfreg.serializers import ErrorSerializer, VnfInfoSerializer, ResponseSerializer
+from mgr.vnfreg.serializers import ErrorSerializer, VnfInfoSerializer, ResponseSerializer, NoneSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -73,9 +74,29 @@ class vnfmgr_addvnf(APIView):
 
         return Response(data=responseSerializer.data, status=status.HTTP_201_CREATED)
 
-
+@swagger_auto_schema(method='put',
+                     request_body=VnfInfoSerializer(),
+                     responses={
+                         202: NoneSerializer(),
+                         500: ErrorSerializer()})
+@swagger_auto_schema(method='delete',
+                     responses={
+                         204: NoneSerializer(),
+                         500: ErrorSerializer()})
+@swagger_auto_schema(methods=['get'],
+                     manual_parameters=[
+                         openapi.Parameter('test',
+                                           openapi.IN_QUERY,
+                                           "test manual param",
+                                           type=openapi.TYPE_BOOLEAN
+                                           ), ],
+                     responses={
+                         200: openapi.Response('response description', VnfInfoSerializer()),
+                         500: ErrorSerializer()})
 @api_view(http_method_names=['GET', 'PUT', 'DELETE'])
 def access_vnf(request, *args, **kwargs):
+    requestSerializer = VnfInfoSerializer(data=request.data)
+    request_isValid = requestSerializer.is_valid()
     vnf_inst_id = ignore_case_get(kwargs, "vnfInstId")
     logger.info("Enter %s, method is %s, ", fun_name(), request.method)
     logger.info("vnfInstId is %s, data is %s", vnf_inst_id, request.data)
@@ -85,19 +106,27 @@ def access_vnf(request, *args, **kwargs):
             err_msg = "Vnf(%s) does not exist." % vnf_inst_id
             return Response(data={'error': err_msg}, status=status.HTTP_404_NOT_FOUND)
         if request.method == 'GET':
-            ret = {
+            resp = {
                 "vnfInstId": vnf_inst_id,
                 "ip": vnf[0].ip,
                 "port": vnf[0].port,
                 "username": vnf[0].username,
                 "password": vnf[0].password
             }
+            responseSerializer = VnfInfoSerializer(data=resp)
+            if not responseSerializer.is_valid():
+                raise Exception(responseSerializer.errors)
+            ret = responseSerializer.data
             normal_status = status.HTTP_200_OK
         elif request.method == 'PUT':
-            ip = ignore_case_get(request.data, "ip")
-            port = ignore_case_get(request.data, "port")
-            username = ignore_case_get(request.data, "username")
-            password = ignore_case_get(request.data, "password")
+            if not request_isValid:
+                raise Exception(requestSerializer.errors)
+
+            requestData = requestSerializer.data
+            ip = ignore_case_get(requestData, "ip")
+            port = ignore_case_get(requestData, "port")
+            username = ignore_case_get(requestData, "username")
+            password = ignore_case_get(requestData, "password")
             if ip:
                 vnf[0].ip = ip
             if port:
@@ -114,9 +143,8 @@ def access_vnf(request, *args, **kwargs):
             ret = {}
             normal_status = status.HTTP_204_NO_CONTENT
     except Exception as e:
-        logger.error(e.message)
-        logger.error(traceback.format_exc())
-        return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        errorData = handler_exception(e)
+        return Response(data=errorData, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data=ret, status=normal_status)
 
 
