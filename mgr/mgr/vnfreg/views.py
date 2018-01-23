@@ -27,7 +27,8 @@ from mgr.pub.utils.values import ignore_case_get
 from mgr.pub.utils.syscomm import fun_name
 from mgr.pub.database.models import VnfRegModel
 from mgr.pub.utils import restcall
-from mgr.vnfreg.serializers import ErrorSerializer, VnfInfoSerializer, ResponseSerializer, NoneSerializer
+from mgr.vnfreg.serializers import ErrorSerializer, VnfInfoSerializer, ResponseSerializer, NoneSerializer, \
+    VnfConfigSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -149,11 +150,18 @@ def access_vnf(request, *args, **kwargs):
     return Response(data=ret, status=normal_status)
 
 
+@swagger_auto_schema(method='post', request_body=VnfConfigSerializer(), responses={202:NoneSerializer(),500: ErrorSerializer()})
 @api_view(http_method_names=['POST'])
 def vnf_config(request, *args, **kwargs):
     logger.info("Enter %s, data is %s", fun_name(), request.data)
-    vnf_inst_id = ignore_case_get(request.data, "vnfInstanceId")
+    requestSerializer = VnfConfigSerializer(data=request.data)
+    request_isValid = requestSerializer.is_valid()
     try:
+        if not request_isValid:
+            raise Exception(requestSerializer.errors)
+
+        requestData = requestSerializer.data
+        vnf_inst_id = ignore_case_get(requestData, "vnfInstanceId")
         vnf = VnfRegModel.objects.filter(id=vnf_inst_id)
         if not vnf:
             raise Exception("Vnf(%s) does not exist." % vnf_inst_id)
@@ -164,11 +172,10 @@ def vnf_config(request, *args, **kwargs):
             auth_type=restcall.rest_no_auth,
             resource="v1/vnfconfig",
             method="POST",
-            content=json.dumps(request.data))
+            content=json.dumps(requestData))
         if ret[0] != 0:
             raise Exception("Failed to config Vnf(%s): %s" % (vnf_inst_id, ret[1]))
     except Exception as e:
-        logger.error(e.message)
-        logger.error(traceback.format_exc())
-        return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        errorData = handler_exception(e)
+        return Response(data=errorData, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data={}, status=status.HTTP_202_ACCEPTED)
