@@ -17,8 +17,6 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from mgr.swagger import views
-
 swagger_info = openapi.Info(
     title="vnfmgr API",
     default_version='v1',
@@ -36,11 +34,11 @@ SchemaView = get_schema_view(
 )
 
 urlpatterns = [
-    url(r'^api/vnfmgr/v1/swagger.json$', views.SwaggerView.as_view()),
-    url(r'^swagger(?P<format>.json|.yaml)$', SchemaView.without_ui(cache_timeout=0), name='schema-json'),
-    url(r'^swagger/$', SchemaView.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    url(r'^redoc/$', SchemaView.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    url(r'^cached/swagger(?P<format>.json|.yaml)$', SchemaView.without_ui(cache_timeout=None), name='cschema-json'),
-    url(r'^cached/swagger/$', SchemaView.with_ui('swagger', cache_timeout=None), name='cschema-swagger-ui'),
-    url(r'^cached/redoc/$', SchemaView.with_ui('redoc', cache_timeout=None), name='cschema-redoc'),
+    # url(r'^api/vnfmgr/v1/swagger.json$', views.SwaggerView.as_view()),
+    url(r'^api/vnfmgr/v1/swagger(?P<format>.json|.yaml)$', SchemaView.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^api/vnfmgr/v1/swagger/$', SchemaView.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^api/vnfmgr/v1/redoc/$', SchemaView.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    url(r'^api/vnfmgr/v1/cached/swagger(?P<format>.json|.yaml)$', SchemaView.without_ui(cache_timeout=None), name='cschema-json'),
+    url(r'^api/vnfmgr/v1/cached/swagger/$', SchemaView.with_ui('swagger', cache_timeout=None), name='cschema-swagger-ui'),
+    url(r'^api/vnfmgr/v1/cached/redoc/$', SchemaView.with_ui('redoc', cache_timeout=None), name='cschema-redoc'),
 ]
