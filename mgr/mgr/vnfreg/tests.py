@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import unittest
 import json
+import unittest
+
 import mock
-from django.test import Client
 from rest_framework import status
+from rest_framework.test import APIClient
 
 from mgr.pub.database.models import VnfRegModel
 from mgr.pub.utils import restcall
@@ -24,7 +25,7 @@ from mgr.pub.utils import restcall
 
 class VnfRegTest(unittest.TestCase):
     def setUp(self):
-        self.client = Client()
+        self.client = APIClient()
         VnfRegModel.objects.filter().delete()
         self.vnfInst1 = {
             "vnfInstId": "1",
@@ -33,13 +34,6 @@ class VnfRegTest(unittest.TestCase):
             "username": "admin",
             "password": "admin123"
         }
-        self.vnfInst1_new = {
-            "vnfInstId": "1",
-            "ip": "192.168.0.2",
-            "port": "2325",
-            "username": "admin1",
-            "password": "admin1234"
-        }
         self.vnfconfig = {
             "vnfInstanceId": "1",
             "vnfConfigurationData": {
@@ -47,58 +41,12 @@ class VnfRegTest(unittest.TestCase):
                     {
                         "cpId": "cp-1",
                         "cpdId": "cpd-a",
-                        "cpAddress": [
-                            {
-                                "addresses": [
-                                    {
-                                        "addressType": "MAC",
-                                        "l2AddressData": "00:f3:43:20:a2:a3"
-                                    },
-                                    {
-                                        "addressType": "IP",
-                                        "l3AddressData": {
-                                            "iPAddressType": "IPv4",
-                                            "iPAddress": "192.168.104.2"
-                                        }
-                                    }
-                                ],
-                                "useDynamicAddress": "FALSE"
-                            }
-                        ]
                     }
                 ],
                 "vnfSpecificData": {
                     "autoScalable": "FALSE",
                     "autoHealable": "FALSE"
                 }
-            },
-            "vnfcConfigurationData": {
-                "vnfcId": "vnfc-1",
-                "cp": [
-                    {
-                        "cpId": "cp-11",
-                        "cpdId": "cpd-1a",
-                        "cpAddress": [
-                            {
-                                "addresses": [
-                                    {
-                                        "addressType": "MAC",
-                                        "l2AddressData": "00:f3:43:21:a2:a3"
-                                    },
-                                    {
-                                        "addressType": "IP",
-                                        "l3AddressData": {
-                                            "iPAddressType": "IPv4",
-                                            "iPAddress": "192.168.105.2"
-                                        }
-                                    }
-                                ],
-                                "useDynamicAddress": "FALSE"
-                            }
-                        ]
-                    }
-                ],
-                "vnfcSpecificData": {}
             }
         }
 
@@ -128,7 +76,7 @@ class VnfRegTest(unittest.TestCase):
     def test_set_vnf_normal(self):
         self.client.post("/api/vnfmgr/v1/vnfs", self.vnfInst1, format='json')
         response = self.client.put("/api/vnfmgr/v1/vnfs/1",
-                                   json.dumps(self.vnfInst1_new), content_type='application/json')
+                                   json.dumps(self.vnfInst1), content_type='application/json')
         self.assertEqual(status.HTTP_202_ACCEPTED, response.status_code, response.content)
         vnfs = VnfRegModel.objects.filter()
         self.assertEqual(1, len(vnfs))
@@ -139,11 +87,11 @@ class VnfRegTest(unittest.TestCase):
             "username": vnfs[0].username,
             "password": vnfs[0].password
         }
-        self.assertEqual(self.vnfInst1_new, vnfInstActual)
+        self.assertEqual(self.vnfInst1, vnfInstActual)
 
     def test_set_vnf_when_not_exist(self):
         response = self.client.put("/api/vnfmgr/v1/vnfs/1",
-                                   json.dumps(self.vnfInst1_new), content_type='application/json')
+                                   json.dumps(self.vnfInst1), content_type='application/json')
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))
 
