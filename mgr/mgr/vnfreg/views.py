@@ -44,8 +44,8 @@ def handler_exception(e):
 class vnfmgr_addvnf(APIView):
     @swagger_auto_schema(request_body=VnfInfoSerializer(),
                          responses={
-                             201: ResponseSerializer(),
-                             500: ErrorSerializer()})
+                             status.HTTP_201_CREATED: ResponseSerializer(),
+                             status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
     def post(self, request):
         logger.info("Enter %s, data is %s", fun_name(), request.data)
         requestSerializer = VnfInfoSerializer(data=request.data)
@@ -79,12 +79,12 @@ class vnfmgr_addvnf(APIView):
 @swagger_auto_schema(method='put',
                      request_body=VnfInfoSerializer(),
                      responses={
-                         202: NoneSerializer(),
-                         500: ErrorSerializer()})
+                         status.HTTP_202_ACCEPTED: NoneSerializer(),
+                         status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
 @swagger_auto_schema(method='delete',
                      responses={
-                         204: NoneSerializer(),
-                         500: ErrorSerializer()})
+                         status.HTTP_204_NO_CONTENT: NoneSerializer(),
+                         status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
 @swagger_auto_schema(methods=['get'],
                      manual_parameters=[
                          openapi.Parameter('test',
@@ -93,8 +93,8 @@ class vnfmgr_addvnf(APIView):
                                            type=openapi.TYPE_BOOLEAN
                                            ), ],
                      responses={
-                         200: openapi.Response('response description', VnfInfoSerializer()),
-                         500: ErrorSerializer()})
+                         status.HTTP_200_OK: openapi.Response('response description', VnfInfoSerializer()),
+                         status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
 @api_view(http_method_names=['GET', 'PUT', 'DELETE'])
 def access_vnf(request, *args, **kwargs):
     requestSerializer = VnfInfoSerializer(data=request.data)
@@ -153,8 +153,8 @@ def access_vnf(request, *args, **kwargs):
 @swagger_auto_schema(method='post',
                      request_body=VnfConfigSerializer(),
                      responses={
-                         202: NoneSerializer(),
-                         500: ErrorSerializer()})
+                         status.HTTP_202_ACCEPTED: NoneSerializer(),
+                         status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
 @api_view(http_method_names=['POST'])
 def vnf_config(request, *args, **kwargs):
     logger.info("Enter %s, data is %s", fun_name(), request.data)
