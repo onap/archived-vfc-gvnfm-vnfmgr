@@ -27,10 +27,6 @@ class ResponseSerializer(serializers.Serializer):
     vnfInstId = serializers.CharField(help_text="the instance id of vnf", required=True)
 
 
-class ErrorSerializer(serializers.Serializer):
-    error = serializers.CharField(help_text="error message", required=True)
-
-
 class NoneSerializer(serializers.Serializer):
     pass
 

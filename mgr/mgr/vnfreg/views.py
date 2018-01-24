@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
 import json
+import logging
 import traceback
 
 from drf_yasg import openapi
@@ -23,29 +23,20 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from mgr.pub.utils.values import ignore_case_get
-from mgr.pub.utils.syscomm import fun_name
 from mgr.pub.database.models import VnfRegModel
 from mgr.pub.utils import restcall
-from mgr.vnfreg.serializers import ErrorSerializer, VnfInfoSerializer, ResponseSerializer, NoneSerializer, \
-    VnfConfigSerializer
+from mgr.pub.utils.syscomm import fun_name
+from mgr.pub.utils.values import ignore_case_get
+from mgr.vnfreg.serializers import VnfInfoSerializer, ResponseSerializer, NoneSerializer, VnfConfigSerializer
 
 logger = logging.getLogger(__name__)
-
-
-def handler_exception(e):
-    logger.error(e.message)
-    logger.error(traceback.format_exc())
-    errorSerializer = ErrorSerializer(data={'error': e.message})
-    errorSerializer.is_valid()
-    return errorSerializer.data
 
 
 class vnfmgr_addvnf(APIView):
     @swagger_auto_schema(request_body=VnfInfoSerializer(),
                          responses={
                              status.HTTP_201_CREATED: ResponseSerializer(),
-                             status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
+                             status.HTTP_500_INTERNAL_SERVER_ERROR: 'internal error'})
     def post(self, request):
         logger.info("Enter %s, data is %s", fun_name(), request.data)
         requestSerializer = VnfInfoSerializer(data=request.data)
@@ -70,8 +61,9 @@ class vnfmgr_addvnf(APIView):
             if not isValid:
                 raise Exception(responseSerializer.errors)
         except Exception as e:
-            errorData = handler_exception(e)
-            return Response(data=errorData, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logger.error(e.message)
+            logger.error(traceback.format_exc())
+            return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response(data=responseSerializer.data, status=status.HTTP_201_CREATED)
 
@@ -80,11 +72,11 @@ class vnfmgr_addvnf(APIView):
                      request_body=VnfInfoSerializer(),
                      responses={
                          status.HTTP_202_ACCEPTED: NoneSerializer(),
-                         status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
+                         status.HTTP_500_INTERNAL_SERVER_ERROR: 'internal error'})
 @swagger_auto_schema(method='delete',
                      responses={
                          status.HTTP_204_NO_CONTENT: NoneSerializer(),
-                         status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
+                         status.HTTP_500_INTERNAL_SERVER_ERROR: 'internal error'})
 @swagger_auto_schema(methods=['get'],
                      manual_parameters=[
                          openapi.Parameter('test',
@@ -94,7 +86,7 @@ class vnfmgr_addvnf(APIView):
                                            ), ],
                      responses={
                          status.HTTP_200_OK: openapi.Response('response description', VnfInfoSerializer()),
-                         status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
+                         status.HTTP_500_INTERNAL_SERVER_ERROR: 'internal error'})
 @api_view(http_method_names=['GET', 'PUT', 'DELETE'])
 def access_vnf(request, *args, **kwargs):
     requestSerializer = VnfInfoSerializer(data=request.data)
@@ -145,8 +137,9 @@ def access_vnf(request, *args, **kwargs):
             ret = {}
             normal_status = status.HTTP_204_NO_CONTENT
     except Exception as e:
-        errorData = handler_exception(e)
-        return Response(data=errorData, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        logger.error(e.message)
+        logger.error(traceback.format_exc())
+        return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data=ret, status=normal_status)
 
 
@@ -154,7 +147,7 @@ def access_vnf(request, *args, **kwargs):
                      request_body=VnfConfigSerializer(),
                      responses={
                          status.HTTP_202_ACCEPTED: NoneSerializer(),
-                         status.HTTP_500_INTERNAL_SERVER_ERROR: ErrorSerializer()})
+                         status.HTTP_500_INTERNAL_SERVER_ERROR: 'internal error'})
 @api_view(http_method_names=['POST'])
 def vnf_config(request, *args, **kwargs):
     logger.info("Enter %s, data is %s", fun_name(), request.data)
@@ -180,6 +173,7 @@ def vnf_config(request, *args, **kwargs):
         if ret[0] != 0:
             raise Exception("Failed to config Vnf(%s): %s" % (vnf_inst_id, ret[1]))
     except Exception as e:
-        errorData = handler_exception(e)
-        return Response(data=errorData, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        logger.error(e.message)
+        logger.error(traceback.format_exc())
+        return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(data={}, status=status.HTTP_202_ACCEPTED)
