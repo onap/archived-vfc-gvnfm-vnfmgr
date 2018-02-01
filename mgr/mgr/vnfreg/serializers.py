@@ -17,42 +17,77 @@ from rest_framework import serializers
 
 class VnfInfoSerializer(serializers.Serializer):
     vnfInstId = serializers.CharField(
-        help_text="the instance id of vnf", required=True)
-    ip = serializers.CharField(help_text="the ip of vnf", required=True)
-    port = serializers.CharField(help_text="the port of vnf", required=True)
+        help_text="the instance id of vnf",
+        required=True,
+        max_length=200,
+        allow_null=True)
+    ip = serializers.CharField(
+        help_text="the ip of vnf",
+        required=True,
+        max_length=200,
+        allow_null=True)
+    port = serializers.CharField(
+        help_text="the port of vnf",
+        required=True,
+        max_length=200,
+        allow_null=True)
     username = serializers.CharField(
-        help_text="the username of vnf", required=True)
+        help_text="the username of vnf",
+        required=True,
+        max_length=255,
+        allow_null=True)
     password = serializers.CharField(
-        help_text="the password of vnf", required=True)
+        help_text="the password of vnf",
+        required=True,
+        max_length=255,
+        allow_null=True)
 
 
 class ResponseSerializer(serializers.Serializer):
     vnfInstId = serializers.CharField(
-        help_text="the instance id of vnf", required=True)
+        help_text="the instance id of vnf",
+        required=True,
+        max_length=200,
+        allow_null=False)
 
 
 class CpSerializer(serializers.Serializer):
-    cpId = serializers.CharField(help_text="the cps id of vnf", required=True)
+    cpId = serializers.CharField(
+        help_text="the cps id of vnf",
+        required=True,
+        max_length=200,
+        allow_null=True)
     cpdId = serializers.CharField(
         help_text="the cpds id of vnf",
-        required=True)
+        required=True, max_length=200, allow_null=True)
 
 
 class SpecificDataSerializer(serializers.Serializer):
     autoScalable = serializers.CharField(
-        help_text="the autoScalable of vnf", required=True)
+        help_text="the autoScalable of vnf",
+        required=True,
+        max_length=200,
+        allow_null=True)
     autoHealable = serializers.CharField(
-        help_text="the autoHealable of vnf", required=True)
+        help_text="the autoHealable of vnf",
+        required=True,
+        max_length=200,
+        allow_null=True)
 
 
 class ConfigDataSerializer(serializers.Serializer):
-    cp = CpSerializer(help_text="the cps of vnf", many=True)
+    cp = CpSerializer(help_text="the cps of vnf", many=True, allow_null=True)
     vnfSpecificData = SpecificDataSerializer(
-        help_text="the vnfSpecificData of vnf", required=True)
+        help_text="the vnfSpecificData of vnf", required=True, allow_null=True)
 
 
 class VnfConfigSerializer(serializers.Serializer):
     vnfInstanceId = serializers.CharField(
-        help_text="the instance id of vnf", required=True)
+        help_text="the instance id of vnf",
+        required=True,
+        max_length=200,
+        allow_null=True)
     vnfConfigurationData = ConfigDataSerializer(
-        help_text="the ConfigDataSerializer of vnf", required=True)
+        help_text="the ConfigDataSerializer of vnf",
+        required=True,
+        allow_null=True)
