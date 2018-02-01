@@ -31,10 +31,6 @@ class ResponseSerializer(serializers.Serializer):
         help_text="the instance id of vnf", required=True)
 
 
-class NoneSerializer(serializers.Serializer):
-    pass
-
-
 class CpSerializer(serializers.Serializer):
     cpId = serializers.CharField(help_text="the cps id of vnf", required=True)
     cpdId = serializers.CharField(

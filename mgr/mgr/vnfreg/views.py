@@ -27,7 +27,7 @@ from mgr.pub.database.models import VnfRegModel
 from mgr.pub.utils import restcall
 from mgr.pub.utils.syscomm import fun_name
 from mgr.pub.utils.values import ignore_case_get
-from mgr.vnfreg.serializers import VnfInfoSerializer, ResponseSerializer, NoneSerializer, VnfConfigSerializer
+from mgr.vnfreg.serializers import VnfInfoSerializer, ResponseSerializer, VnfConfigSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -71,11 +71,11 @@ class vnfmgr_addvnf(APIView):
 @swagger_auto_schema(method='put',
                      request_body=VnfInfoSerializer(),
                      responses={
-                         status.HTTP_202_ACCEPTED: NoneSerializer(),
+                         status.HTTP_202_ACCEPTED: 'successfully',
                          status.HTTP_500_INTERNAL_SERVER_ERROR: 'internal error'})
 @swagger_auto_schema(method='delete',
                      responses={
-                         status.HTTP_204_NO_CONTENT: NoneSerializer(),
+                         status.HTTP_204_NO_CONTENT: 'successfully',
                          status.HTTP_500_INTERNAL_SERVER_ERROR: 'internal error'})
 @swagger_auto_schema(methods=['get'],
                      manual_parameters=[
@@ -146,7 +146,7 @@ def access_vnf(request, *args, **kwargs):
 @swagger_auto_schema(method='post',
                      request_body=VnfConfigSerializer(),
                      responses={
-                         status.HTTP_202_ACCEPTED: NoneSerializer(),
+                         status.HTTP_202_ACCEPTED: 'successfully',
                          status.HTTP_500_INTERNAL_SERVER_ERROR: 'internal error'})
 @api_view(http_method_names=['POST'])
 def vnf_config(request, *args, **kwargs):
