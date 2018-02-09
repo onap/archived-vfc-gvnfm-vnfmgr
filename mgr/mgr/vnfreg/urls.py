@@ -13,13 +13,11 @@
 # limitations under the License.
 
 from django.conf.urls import url
+
 from mgr.vnfreg import views
-from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     url(r'^api/vnfmgr/v1/vnfs$', views.vnfmgr_addvnf.as_view(), name='add_vnf'),
     url(r'^api/vnfmgr/v1/vnfs/(?P<vnfInstId>[0-9a-zA-Z\-\_]+)$', views.access_vnf, name='access_vnf'),
     url(r'^api/vnfmgr/v1/configuration$', views.vnf_config, name='vnf_config'),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
