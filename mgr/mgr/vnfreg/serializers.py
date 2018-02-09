@@ -59,7 +59,9 @@ class CpSerializer(serializers.Serializer):
         allow_null=True)
     cpdId = serializers.CharField(
         help_text="cpdId",
-        required=True, max_length=200, allow_null=True)
+        required=True,
+        max_length=200,
+        allow_null=True)
 
 
 class SpecificDataSerializer(serializers.Serializer):
@@ -76,9 +78,14 @@ class SpecificDataSerializer(serializers.Serializer):
 
 
 class ConfigDataSerializer(serializers.Serializer):
-    cp = CpSerializer(help_text="cps", many=True, allow_null=True)
+    cp = CpSerializer(
+        help_text="cps",
+        many=True,
+        allow_null=True)
     vnfSpecificData = SpecificDataSerializer(
-        help_text="vnfSpecificData", required=True, allow_null=True)
+        help_text="vnfSpecificData",
+        required=True,
+        allow_null=True)
 
 
 class VnfConfigSerializer(serializers.Serializer):
