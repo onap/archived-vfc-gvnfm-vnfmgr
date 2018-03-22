@@ -57,6 +57,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mgr.middleware.LogContextMiddleware',
 ]
 
 ROOT_URLCONF = 'mgr.urls'
@@ -118,36 +119,45 @@ TIME_ZONE = 'UTC'
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+#
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': True,
+#     'formatters': {
+#         'standard': {
+#             'format': '%(asctime)s:[%(name)s]:[%(filename)s]-[%(lineno)d] [%(levelname)s]:%(message)s',
+#         },
+#     },
+#     'filters': {
+#     },
+#     'handlers': {
+#         'mgr_handler': {
+#             'level': 'DEBUG',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'filename': os.path.join(BASE_DIR, 'logs/runtime_mgr.log'),
+#             'formatter': 'standard',
+#             'maxBytes': 1024 * 1024 * 50,
+#             'backupCount': 5,
+#         },
+#     },
+#
+#     'loggers': {
+#         'mgr': {
+#             'handlers': ['mgr_handler'],
+#             'level': 'DEBUG',
+#             'propagate': False
+#         },
+#     }
+# }
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'standard': {
-            'format': '%(asctime)s:[%(name)s]:[%(filename)s]-[%(lineno)d] [%(levelname)s]:%(message)s',
-        },
-    },
-    'filters': {
-    },
-    'handlers': {
-        'mgr_handler': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/runtime_mgr.log'),
-            'formatter': 'standard',
-            'maxBytes': 1024 * 1024 * 50,
-            'backupCount': 5,
-        },
-    },
+from logging import config
+from onaplogging import monkey
+monkey.patch_all()
+LOGGING_CONFIG = None
+# yaml configuration of logging
+LOGGING_FILE = os.path.join(BASE_DIR, 'mgr/log.yml')
+config.yamlConfig(filepath=LOGGING_FILE, watchDog=True)
 
-    'loggers': {
-        'mgr': {
-            'handlers': ['mgr_handler'],
-            'level': 'DEBUG',
-            'propagate': False
-        },
-    }
-}
 
 if 'test' in sys.argv:
     from mgr.pub.config import config
