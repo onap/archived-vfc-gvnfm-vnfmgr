@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_b77165e2",
+        "filename": "mgr/mgr/log.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1899
+      },
+      "writtenOn": "2018-03-22T11:16:36Z",
+      "side": 1,
+      "message": "Please remove the \u0027vnfmgrlocal_handler\u0027 handler. It\u0027s format is not official and output logging file path is not correct.",
+      "range": {
+        "startLine": 6,
+        "startChar": 18,
+        "endLine": 6,
+        "endChar": 55
+      },
+      "revId": "67bc77dd3de414bcbf26a64eb0a777debc0f99df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
