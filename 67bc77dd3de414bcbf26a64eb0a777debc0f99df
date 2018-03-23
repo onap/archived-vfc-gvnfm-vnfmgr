@@ -22,6 +22,30 @@
       "revId": "67bc77dd3de414bcbf26a64eb0a777debc0f99df",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_9e48fe88",
+        "filename": "mgr/mgr/log.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1337
+      },
+      "writtenOn": "2018-03-23T00:58:00Z",
+      "side": 1,
+      "message": "vnfmgrlocal_handler and django_handler is used by vfc, use the easy to read log format.\nvnfmgr_handler is used by log project.",
+      "parentUuid": "5a93c517_b77165e2",
+      "range": {
+        "startLine": 6,
+        "startChar": 18,
+        "endLine": 6,
+        "endChar": 55
+      },
+      "revId": "67bc77dd3de414bcbf26a64eb0a777debc0f99df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
