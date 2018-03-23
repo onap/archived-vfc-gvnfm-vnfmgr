@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a93c517_3e244ac5",
+        "filename": "mgr/logs/django.log",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2018-03-23T01:09:15Z",
+      "side": 1,
+      "message": "This file is not needed, it is created by app automatically.",
+      "revId": "67bc77dd3de414bcbf26a64eb0a777debc0f99df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a93c517_b77165e2",
         "filename": "mgr/mgr/log.yml",
         "patchSetId": 2
@@ -43,6 +60,23 @@
         "endLine": 6,
         "endChar": 55
       },
+      "revId": "67bc77dd3de414bcbf26a64eb0a777debc0f99df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_fe2d82a9",
+        "filename": "mgr/mgr/middleware.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2018-03-23T01:09:15Z",
+      "side": 1,
+      "message": "License header need be added.",
       "revId": "67bc77dd3de414bcbf26a64eb0a777debc0f99df",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
