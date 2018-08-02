@@ -9,6 +9,9 @@ ENV https_proxy $HTTPS_PROXY
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 
+RUN sed -i "s|set compatible|set nocompatible|" /etc/vim/vimrc.tiny \ &
+    echo "set backspace=2" >> /etc/vim/vimrc.tiny
+
 RUN apt-get update && \
     apt-get install -y python-virtualenv && \
     apt-get install -y python-setuptools && \
