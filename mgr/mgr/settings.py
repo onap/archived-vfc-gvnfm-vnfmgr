@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'mgr.pub.database',
     'mgr.samples',
+    'mgr.swagger',
     'drf_yasg',
 ]
 
