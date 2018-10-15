@@ -16,5 +16,8 @@ from django.conf.urls import url
 from mgr.samples import views
 
 urlpatterns = [
-    url(r'^samples/$', views.SampleList.as_view())
+    url(r'^samples/$', views.SampleList.as_view()),
+    url(r'^api/vnfmgr/v1/reloadstub/(?P<fileName>[0-9a-zA-Z\-\_\.]+)$', views.reloadstub, name='reloadstub'),
+    url(r'^api/vnfmgr/v1/reg2msb/(?P<msName>[0-9a-zA-Z\-\_]+)$', views.reg2msb, name='reg2msb'),
+    url(r'^(?P<uri>[0-9a-zA-Z\-\_/]+)$', views.stub, name='stub')
 ]
