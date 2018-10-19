@@ -14,6 +14,7 @@
 
 import logging
 import json
+import re
 
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -25,9 +26,8 @@ from mgr.pub.config.config import REG_TO_MSB_REG_URL, REG_TO_MSB_REG_PARAM
 
 logger = logging.getLogger(__name__)
 
-_stub_mapping_ = {
-    ("GET", "/api/ms1/v1/samples/1"): (200, {"status": "ok"})
-}
+# ("GET", "^/api/ms1/v1/samples/(?P<sampleId>[0-9a-zA-Z\-\_]+)$", 200, '{"sampleId": "<sampleId>"}')
+_stub_mapping_ = []
 
 
 class SampleList(APIView):
@@ -52,25 +52,34 @@ def reloadstub(request, *args, **kwargs):
     file_name = kwargs.get('fileName')
     logger.info("[reloadstub]file name is %s", file_name)
     global _stub_mapping_
+    _stub_mapping_ = []
     with open("/tmp/%s" % file_name) as url_mapping_file:
         for block in url_mapping_file.read().split("=##="):
-            items = block.split("|")
+            if not block.strip():
+                continue
+            items = block.split("##")
             if len(items) != 4:
                 logger.warn("Abnormal block: %s", block)
                 continue
-            method = items[0].strip()
-            uri = items[1].strip()
+            method = items[0].strip().upper()
+            uri_re = re.compile(items[1].strip())
             code = int(items[2].strip())
-            data = json.loads(items[3].strip())
-            _stub_mapping_[(method, uri)] = (code, data)
-    return Response(data={"reloadstub": "ok"}, status=status.HTTP_200_OK)
+            data = items[3].strip()
+            _stub_mapping_.append((method, uri_re, code, data))
+    return Response(data={"reloadstub": len(_stub_mapping_)}, status=status.HTTP_200_OK)
 
 
 @api_view(http_method_names=['POST', 'GET', 'DELETE', 'PUT'])
 def stub(request, *args, **kwargs):
     logger.info("[stub][%s][%s], data=%s", request.method, request.path, request.data)
     global _stub_mapping_
-    match_result = _stub_mapping_.get((request.method.upper(), request.path))
-    if match_result:
-        return Response(data=match_result[1], status=match_result[0])
+    for method, uri_re, code, data in _stub_mapping_:
+        if method != request.method.upper():
+            continue
+        re_match = uri_re.match(request.path)
+        if not re_match:
+            continue
+        for k, v in re_match.groupdict().items():
+            data = data.replace('<%s>' % k, v)
+        return Response(data=json.loads(data), status=code)
     return Response(data={"stub": "stub"}, status=status.HTTP_200_OK)
