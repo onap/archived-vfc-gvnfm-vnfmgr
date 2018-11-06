@@ -28,7 +28,7 @@ ADD . /service
 WORKDIR /service
 
 # get binary zip from nexus - vfc-gvnfm-vnfmgr
-RUN wget -q -O vfc-gvnfm-vnfmgr.zip 'https://nexus.onap.org/service/local/artifact/maven/redirect?r=snapshots&g=org.onap.vfc.gvnfm.vnfmgr.mgr&a=vfc-gvnfm-vnfmgr-mgr&v=LATEST&e=zip' && \
+RUN wget -q -O vfc-gvnfm-vnfmgr.zip 'https://nexus.onap.org/service/local/artifact/maven/redirect?r=staging&g=org.onap.vfc.gvnfm.vnfmgr.mgr&a=vfc-gvnfm-vnfmgr-mgr&v=LATEST&e=zip' && \
     unzip vfc-gvnfm-vnfmgr.zip && \
     rm -rf vfc-gvnfm-vnfmgr.zip
 
