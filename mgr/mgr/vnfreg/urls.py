@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^api/vnfmgr/v1/configuration$', views.vnf_config, name='vnf_config'),
 
     # health check
-    url(r'^api/vnfmgr/v1/healthcheck$', HealthCheckView.as_view()),
+    url(r'^api/vnfmgr/v1/health_check$', HealthCheckView.as_view()),
 ]

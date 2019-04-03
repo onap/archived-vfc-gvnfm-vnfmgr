@@ -127,3 +127,17 @@ class VnfRegTest(unittest.TestCase):
         response = self.client.post("/api/vnfmgr/v1/configuration", self.vnfconfig, format='json')
         self.assertEqual(status.HTTP_500_INTERNAL_SERVER_ERROR, response.status_code, response.content)
         self.assertEqual({'error': "Vnf(1) does not exist."}, json.loads(response.content))
+
+
+class HealthCheckViewTest(unittest.TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+    def tearDown(self):
+        pass
+
+    def test_health_check(self):
+        response = self.client.get("/api/vnfmgr/v1/health_check")
+        self.assertEqual(status.HTTP_200_OK, response.status_code, response.content)
+        resp_data = json.loads(response.content)
+        self.assertEqual({"status": "active"}, resp_data)
