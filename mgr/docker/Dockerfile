@@ -22,7 +22,11 @@ RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y build-essential && \
     apt-get install -y libssl-dev && \
-    apt-get install -y libffi-dev
+    apt-get install -y libffi-dev && \
+    groupadd -r onap && useradd -r -g onap onap && \
+    chmod u+w /etc/sudoers && \
+    sed -i '/User privilege/a\\onap    ALL=(ALL:ALL) NOPASSWD:ALL' /etc/sudoers && \
+    chmod u-x /etc/sudoers
 
 ADD . /service
 WORKDIR /service
@@ -30,12 +34,14 @@ WORKDIR /service
 # get binary zip from nexus - vfc-gvnfm-vnfmgr
 RUN wget -q -O vfc-gvnfm-vnfmgr.zip 'https://nexus.onap.org/service/local/artifact/maven/redirect?r=snapshots&g=org.onap.vfc.gvnfm.vnfmgr.mgr&a=vfc-gvnfm-vnfmgr-mgr&v=LATEST&e=zip' && \
     unzip vfc-gvnfm-vnfmgr.zip && \
-    rm -rf vfc-gvnfm-vnfmgr.zip
+    rm -rf vfc-gvnfm-vnfmgr.zip && \
+    chown onap:onap /service -R
 
 WORKDIR /service/vfc/gvnfm/vnfmgr/mgr
 RUN pip install -r requirements.txt
 
 EXPOSE 8803
+USER onap
 
 WORKDIR /service
 ENTRYPOINT vfc/gvnfm/vnfmgr/mgr/docker/docker-entrypoint.sh
