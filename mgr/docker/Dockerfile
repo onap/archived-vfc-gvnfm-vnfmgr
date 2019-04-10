@@ -35,7 +35,7 @@ WORKDIR /service
 RUN wget -q -O vfc-gvnfm-vnfmgr.zip 'https://nexus.onap.org/service/local/artifact/maven/redirect?r=snapshots&g=org.onap.vfc.gvnfm.vnfmgr.mgr&a=vfc-gvnfm-vnfmgr-mgr&v=LATEST&e=zip' && \
     unzip vfc-gvnfm-vnfmgr.zip && \
     rm -rf vfc-gvnfm-vnfmgr.zip && \
-    chown onap:onap /service -R
+    chown onap:onap -R /service /var/log
 
 WORKDIR /service/vfc/gvnfm/vnfmgr/mgr
 RUN pip install -r requirements.txt
