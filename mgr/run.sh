@@ -25,9 +25,3 @@ if [ "${SSL_ENABLED}" = "true" ]; then
 else
     nohup uwsgi --http :8803 -t 120 --module mgr.wsgi --master --processes 4 &
 fi
-
-while [ ! -f $logDir/runtime_mgr.log ]; do
-    sleep 1
-done
-
-tail -F  $logDir/runtime_mgr.log
