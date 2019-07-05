@@ -61,9 +61,9 @@ class vnfmgr_addvnf(APIView):
 
             return Response(data=response_serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
-            logger.error(e.message)
+            logger.error(e.args[0])
             logger.error(traceback.format_exc())
-            return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(data={'error': e.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(method='put',
@@ -133,9 +133,9 @@ def access_vnf(request, *args, **kwargs):
             return Response(data={}, status=status.HTTP_204_NO_CONTENT)
 
     except Exception as e:
-        logger.error(e.message)
+        logger.error(e.args[0])
         logger.error(traceback.format_exc())
-        return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(data={'error': e.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(method='post',
@@ -169,6 +169,6 @@ def vnf_config(request, *args, **kwargs):
 
         return Response(data={}, status=status.HTTP_202_ACCEPTED)
     except Exception as e:
-        logger.error(e.message)
+        logger.error(e.args[0])
         logger.error(traceback.format_exc())
-        return Response(data={'error': e.message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(data={'error': e.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -15,7 +15,7 @@
 import sys
 import traceback
 import logging
-import urllib2
+import urllib
 import uuid
 import httplib2
 
@@ -60,7 +60,7 @@ def call_req(base_url, user, passwd, auth_type, resource, method, content=''):
                     ret = [1, "Unable to connect to %s" % full_url, resp_status]
                     continue
                 raise ex
-    except urllib2.URLError as err:
+    except urllib.error.URLError as err:
         ret = [2, str(err), resp_status]
     except Exception as ex:
         logger.error(traceback.format_exc())

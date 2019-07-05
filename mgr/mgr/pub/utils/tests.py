@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import unittest
-import syscomm
-import values
-import enumutil
+from . import syscomm
+from . import values
+from . import enumutil
 
 
 class UtilsTest(unittest.TestCase):

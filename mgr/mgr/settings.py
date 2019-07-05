@@ -16,7 +16,7 @@ import os
 import sys
 import platform
 
-import redisco
+import mgr.pub.redisco
 
 from mgr.pub.config.config import REDIS_HOST, REDIS_PORT, REDIS_PASSWD
 from mgr.pub.config.config import DB_NAME, DB_IP, DB_USER, DB_PASSWD, DB_PORT
@@ -53,16 +53,15 @@ INSTALLED_APPS = [
     'drf_yasg',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mgr.middleware.LogContextMiddleware',
+    'mgr.middleware.LogContextMiddleware'
 ]
 
 ROOT_URLCONF = 'mgr.urls'
@@ -115,7 +114,7 @@ DATABASES = {
     },
 }
 
-redisco.connection_setup(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWD, db=0)
+mgr.pub.redisco.connection_setup(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWD, db=0)
 # CACHE_BACKEND = 'redis_cache.cache://%s@%s:%s' % (REDIS_PASSWD, REDIS_HOST, REDIS_PORT)
 
 TIME_ZONE = 'UTC'
