@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import base64
 import sys
 import traceback
 import logging
-import urllib
+import urllib2
 import uuid
 import httplib2
 
@@ -39,7 +40,7 @@ def call_req(base_url, user, passwd, auth_type, resource, method, content=''):
         full_url = combine_url(base_url, resource)
         headers = {'content-type': 'application/json', 'accept': 'application/json'}
         if user:
-            headers['Authorization'] = 'Basic ' + ('%s:%s' % (user, passwd)).encode("base64")
+            headers['Authorization'] = 'Basic %s' % base64.b64encode(bytes('%s:%s' % (user, passwd), "utf-8")).decode()
         ca_certs = None
         for retry_times in range(3):
             http = httplib2.Http(ca_certs=ca_certs, disable_ssl_certificate_validation=(auth_type == rest_no_auth))
@@ -60,7 +61,7 @@ def call_req(base_url, user, passwd, auth_type, resource, method, content=''):
                     ret = [1, "Unable to connect to %s" % full_url, resp_status]
                     continue
                 raise ex
-    except urllib.error.URLError as err:
+    except urllib2.URLError as err:
         ret = [2, str(err), resp_status]
     except Exception as ex:
         logger.error(traceback.format_exc())
