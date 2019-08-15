@@ -1,0 +1,5 @@
+---
+distribution_type: 'maven'
+version: '1.3.4'
+project: 'vfc-gvnfm-vnfmgr'
+log_dir: 'vfc-gvnfm-vnfmgr-maven-stage-master/59/'
