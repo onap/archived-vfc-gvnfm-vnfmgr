@@ -14,7 +14,7 @@
 
 from django.conf.urls import include, url
 
-from mgr.pub.config.config import REG_TO_MSB_WHEN_START, REG_TO_MSB_REG_URL, REG_TO_MSB_REG_PARAM
+from mgr.pub.config.config import REG_TO_MSB_WHEN_START, REG_TO_MSB_REG_URL, REG_TO_MSB_REG_PARAM, MSB_SVC_URL
 
 urlpatterns = [
     url(r'^', include('mgr.vnfreg.urls')),
@@ -26,4 +26,5 @@ urlpatterns = [
 if REG_TO_MSB_WHEN_START:
     import json
     from mgr.pub.utils.restcall import req_by_msb
+    req_by_msb(MSB_SVC_URL, "DELETE")
     req_by_msb(REG_TO_MSB_REG_URL, "POST", json.JSONEncoder().encode(REG_TO_MSB_REG_PARAM))
