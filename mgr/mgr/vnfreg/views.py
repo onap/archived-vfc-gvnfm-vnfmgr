@@ -42,7 +42,13 @@ class vnfmgr_addvnf(APIView):
         try:
             request_serializer = VnfInfoSerializer(data=request.data)
             if not request_serializer.is_valid():
-                raise Exception(request_serializer.errors)
+                logger.error(request_serializer.errors)
+                return Response(
+                    data={
+                        'error': request_serializer.errors
+                    },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             requestData = request_serializer.data
             vnf_inst_id = ignore_case_get(requestData, "vnfInstId")
