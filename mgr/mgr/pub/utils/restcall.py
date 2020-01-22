@@ -70,6 +70,7 @@ def call_req(base_url, user, passwd, auth_type, resource, method, content=''):
         if 'httplib.ResponseNotReady' in res_info:
             res_info = "The URL[%s] request failed or is not responding." % full_url
         ret = [3, res_info, resp_status]
+        logger.debug(ex)
 
     logger.debug("[%s]ret=%s" % (callid, str(ret)))
     return ret
