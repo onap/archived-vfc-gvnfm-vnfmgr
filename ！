@@ -1,0 +1,25 @@
+Add VFC committer info
+
+Change-Id: I11604bc0118d2fe8d5759fc6a9fe31855b21d1e9
+Issue-ID: VFC-1620
+Signed-off-by: yangyan <yangyanyj@chinamobile.com>
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Wed Feb 12 08:59:41 2020 +0800
+#
+# On branch master
+# Your branch is ahead of 'origin/master' by 2 commits.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	new file:   .idea/deployment.xml
+#	new file:   .idea/inspectionProfiles/profiles_settings.xml
+#	new file:   .idea/misc.xml
+#	new file:   .idea/modules.xml
+#	new file:   .idea/vcs.xml
+#	new file:   .idea/vnfmgr.iml
+#	modified:   .idea/workspace.xml
+#	modified:   INFO.yaml
+#
