@@ -148,8 +148,8 @@ tsc:
     approval: 'https://lists.onap.org/pipermail/onap-tsc'
     changes:
         - type: 'Addition'
-        - name: 'Denes Nemeth'
+          name: 'Denes Nemeth'
           link: 'https://lists.onap.org/g/ONAP-TSC/message/3269'
         - type: 'Addition'
-        - name: 'Haibin Huang'
+          name: 'Haibin Huang'
           link: 'https://lists.onap.org/g/ONAP-TSC/message/3269'
