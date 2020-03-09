@@ -9,7 +9,7 @@ if [ $REG_TO_MSB_WHEN_START ]; then
 fi
 
 if [ $MSB_IP ]; then
-    sed -i "s|MSB_SERVICE_IP.*|MSB_SERVICE_IP = '$MSB_IP'|" vfc/gvnfm/vnfmgr/mgr/mgr/pub/config/config.py
+    sed -i "s|MSB_SERVICE_IP = .*|MSB_SERVICE_IP = '$MSB_IP'|" vfc/gvnfm/vnfmgr/mgr/mgr/pub/config/config.py
 fi
 
 if [ $MSB_PROTO ]; then
@@ -17,7 +17,7 @@ if [ $MSB_PROTO ]; then
 fi
 
 if [ $MSB_PORT ]; then
-    sed -i "s|MSB_SERVICE_PORT.*|MSB_SERVICE_PORT = '$MSB_PORT'|" vfc/gvnfm/vnfmgr/mgr/mgr/pub/config/config.py
+    sed -i "s|MSB_SERVICE_PORT = .*|MSB_SERVICE_PORT = '$MSB_PORT'|" vfc/gvnfm/vnfmgr/mgr/mgr/pub/config/config.py
 fi
 
 if [ $SERVICE_IP ]; then
