@@ -24,6 +24,10 @@ if [ $SERVICE_IP ]; then
     sed -i "s|\"ip\": \".*\"|\"ip\": \"$SERVICE_IP\"|" vfc/gvnfm/vnfmgr/mgr/mgr/pub/config/config.py
 fi
 
+if [ $SSL_ENABLED ]; then
+    sed -i "s|SSL_ENABLED.*|SSL_ENABLED = '$SSL_ENABLED'|"  vfc/gvnfm/vnfmgr/mgr/mgr/pub/config/config.py
+fi
+
 # Configure MYSQL
 MYSQL_IP=`echo $MYSQL_ADDR | cut -d: -f 1`
 MYSQL_PORT=`echo $MYSQL_ADDR | cut -d: -f 2`
