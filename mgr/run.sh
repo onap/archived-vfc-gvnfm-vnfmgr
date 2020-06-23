@@ -18,10 +18,10 @@ if [ ! -x  $logDir  ]; then
        mkdir -p $logDir
 fi
 
-nohup python manage.py runserver 0.0.0.0:8803 > /dev/null &
+# nohup python manage.py runserver 0.0.0.0:8803 > /dev/null &
 
-# if [ "${SSL_ENABLED}" = "true" ]; then
-#     nohup uwsgi --https :8803,mgr/pub/ssl/cert/foobar.crt,mgr/pub/ssl/cert/foobar.key, -t 120 --enable-threads --module mgr.wsgi --master --processes 4 &
-# else
-#     nohup uwsgi --http :8803 -t 120 --enable-threads --module mgr.wsgi --master --processes 4 &
-# fi
+if [ "${SSL_ENABLED}" = "true" ]; then
+   nohup uwsgi --https :8803,mgr/pub/ssl/cert/foobar.crt,mgr/pub/ssl/cert/foobar.key, -t 120 --enable-threads --module mgr.wsgi --master --processes 4 &
+else
+   nohup uwsgi --http :8803 -t 120 --enable-threads --module mgr.wsgi --master --processes 4 &
+fi
