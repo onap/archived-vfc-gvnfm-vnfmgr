@@ -1,0 +1,10 @@
+distribution_type: 'container'
+container_release_tag: '1.3.9'
+project: 'vfc-gvnfm-vnfmgr'
+container_pull_registry: nexus3.onap.org:10003
+container_push_registry: nexus3.onap.org:10002
+log_dir: 'vfc-gvnfm-vnfmgr-master-docker-java-version-shell-daily/1156/'
+ref: 'b6658bc224ca7e1503e38bb4726a61424ecc29eb'
+containers:
+    - name: 'vfc/vnfmgr'
+      version: '1.3.9-STAGING-20200929T014055'
