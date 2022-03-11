@@ -16,7 +16,9 @@ import base64
 import sys
 import traceback
 import logging
-import urllib
+import urllib.request
+import urllib.parse
+import urllib.error
 import uuid
 import httplib2
 
