@@ -79,7 +79,7 @@ def stub(request, *args, **kwargs):
         re_match = uri_re.match(request.path)
         if not re_match:
             continue
-        for k, v in re_match.groupdict().items():
+        for k, v in list(re_match.groupdict().items()):
             data = data.replace('<%s>' % k, v)
         return Response(data=json.loads(data), status=code)
     return Response(data={"stub": "stub"}, status=status.HTTP_200_OK)
