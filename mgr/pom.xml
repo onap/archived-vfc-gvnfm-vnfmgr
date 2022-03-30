@@ -18,12 +18,12 @@
     <parent>
         <groupId>org.onap.vfc.gvnfm.vnfmgr</groupId>
         <artifactId>vfc-gvnfm-vnfmgr</artifactId>
-        <version>1.4.1-SNAPSHOT</version>
+        <version>1.4.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.onap.vfc.gvnfm.vnfmgr.mgr</groupId>
     <artifactId>vfc-gvnfm-vnfmgr-mgr</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.4.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>vfc-gvnfm-vnfmgr-mgr</name>
     <properties>
